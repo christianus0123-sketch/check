@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>아침 체크인</title>
+    <title>아침 출석확인</title>
     <style>
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; padding: 20px; }
         .container { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 500px; width: 100%; }
@@ -28,11 +28,11 @@
 </head>
 <body>
     <div class="container">
-        <h2>📅 아침 체크인</h2>
+        <h2>📅 아침 출석확인</h2>
         <form id="checkinForm">
             <div class="form-group">
                 <label>학번</label>
-                <input type="text" id="id" required placeholder="예: 10101">
+                <input type="text" id="id" required placeholder="예: 1101">
             </div>
             
             <div class="form-group">
@@ -106,7 +106,7 @@
                 mode: 'no-cors',
                 body: JSON.stringify(data)
             }).then(() => {
-                alert("체크인이 완료되었습니다! 오늘도 화이팅! 👍");
+                alert("출석이 완료되었습니다! 오늘도 화이팅! 👍");
                 window.location.reload();
             }).catch(error => {
                 console.error('Error:', error);
