@@ -1,176 +1,63 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>☀️ 아침 조회 출석</title>
-  <style>
-    /* 전체 배경 및 폰트 설정 */
-    body {
-      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-      background-color: #f4f7f6; /* 부드러운 파스텔톤 배경 */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    /* 출석 입력창 박스 디자인 */
-    .container {
-      background-color: #ffffff;
-      padding: 30px 25px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* 은은한 그림자 효과 */
-      width: 100%;
-      max-width: 400px; /* PC에서도 너무 넓어지지 않게 고정 */
-    }
-
-    h2 {
-      text-align: center;
-      color: #333333;
-      margin-bottom: 25px;
-      font-size: 24px;
-    }
-
-    /* 각 입력 항목(학번, 이름 등)의 간격 */
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    /* 항목 제목(라벨) 디자인 */
-    label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: #555555;
-      font-size: 14px;
-    }
-
-    /* 입력칸 및 선택창 디자인 */
-    input[type="text"], select {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      font-size: 16px; /* 모바일 화면 확대 방지용 크기 */
-      box-sizing: border-box;
-      background-color: #fafafa;
-      transition: border-color 0.3s;
-    }
-
-    /* 입력칸 클릭 시 테두리 색상 변화 */
-    input[type="text"]:focus, select:focus {
-      outline: none;
-      border-color: #4CAF50;
-      background-color: #ffffff;
-    }
-
-    /* 제출 버튼 디자인 */
-    button {
-      width: 100%;
-      padding: 16px;
-      background-color: #4CAF50; /* 편안한 초록색 메인 컬러 */
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      margin-top: 10px;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    button:disabled {
-      background-color: #cccccc;
-      cursor: not-allowed;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 아침 확인</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Noto Sans KR', sans-serif; }</style>
 </head>
-<body>
-
-  <div class="container">
-    <h2>☀️ 아침 조회 출석</h2>
-    
-    <form id="checkInForm">
-      <div class="form-group">
-        <label for="id">학번</label>
-        <input type="text" id="id" placeholder="예: 30101" required>
-      </div>
-
-      <div class="form-group">
-        <label for="name">이름</label>
-        <input type="text" id="name" placeholder="이름을 입력하세요" required>
-      </div>
-      
-      <div class="form-group">
-        <label for="mood">오늘의 기분</label>
-        <select id="mood" required>
-          <option value="" disabled selected>기분을 선택해주세요</option>
-          <option value="😎 최고예요">😎 최고예요</option>
-          <option value="🙂 좋아요">🙂 좋아요</option>
-          <option value="😐 보통이에요">😐 보통이에요</option>
-          <option value="🥱 피곤해요">🥱 피곤해요</option>
-          <option value="🤒 아파요">🤒 아파요</option>
-        </select>
-      </div>
-      
-      <div class="form-group">
-        <label for="todayGoal">오늘의 목표</label>
-        <input type="text" id="todayGoal" placeholder="오늘 하루 다짐 한 마디!" required>
-      </div>
-
-      <button type="button" id="submitBtn" onclick="submitData()">출석하기</button>
-    </form>
-  </div>
-
-  <script>
-    function submitData() {
-      // 입력값 확인 (빈칸 검사)
-      const id = document.getElementById("id").value;
-      const name = document.getElementById("name").value;
-      const mood = document.getElementById("mood").value;
-      const todayGoal = document.getElementById("todayGoal").value;
-
-      if(!id || !name || !mood || !todayGoal) {
-        alert("모든 항목을 입력해주세요.");
-        return;
-      }
-
-      // 버튼 상태 변경 (중복 제출 방지)
-      const submitBtn = document.getElementById("submitBtn");
-      submitBtn.innerText = "제출 중...";
-      submitBtn.disabled = true;
-
-      // ★ 아래 따옴표 안에 선생님의 앱스스크립트 웹앱 배포 링크를 붙여넣으세요.
-      const url = "https://script.google.com/macros/s/AKfycby5ItJZvU35klQ_a7DZrMPnGJDqtK3o_WUBHFFN11i2jqkrBNQPHX8BqIz-L5zLtZs/exec";
-      
-      const data = { id, name, mood, todayGoal };
-
-      fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(data)
-      })
-      .then(response => {
-        alert("✅ 출석이 완료되었습니다!");
-        document.getElementById("checkInForm").reset();
-      })
-      .catch(error => {
-        alert("❌ 오류가 발생했습니다. 다시 시도해 주세요.");
-      })
-      .finally(() => {
-        // 전송이 끝나면 버튼 상태 원래대로 복구
-        submitBtn.innerText = "출석하기";
-        submitBtn.disabled = false;
-      });
-    }
-  </script>
+<body class="bg-slate-50 flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
+        <h1 class="text-2xl font-bold text-center text-indigo-600 mb-6">☀️ 좋은 아침입니다!</h1>
+        <form id="attendanceForm" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">학번 (예시: 2101)</label>
+                <input type="number" id="studentId" placeholder="2101" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">이름</label>
+                <input type="text" id="name" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none" required>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">오늘의 기분</label>
+                <div class="flex justify-between mt-2">
+                    <label class="cursor-pointer text-2xl hover:scale-125 transition"><input type="radio" name="mood" value="🥰" class="hidden" required> 🥰</label>
+                    <label class="cursor-pointer text-2xl hover:scale-125 transition"><input type="radio" name="mood" value="🙂" class="hidden"> 🙂</label>
+                    <label class="cursor-pointer text-2xl hover:scale-125 transition"><input type="radio" name="mood" value="😐" class="hidden"> 😐</label>
+                    <label class="cursor-pointer text-2xl hover:scale-125 transition"><input type="radio" name="mood" value="😥" class="hidden"> 😥</label>
+                    <label class="cursor-pointer text-2xl hover:scale-125 transition"><input type="radio" name="mood" value="😡" class="hidden"> 😡</label>
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">오늘의 목표</label>
+                <input type="text" id="goal" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none" placeholder="한 줄 다짐">
+            </div>
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" id="consult" class="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                <label for="consult" class="text-sm font-semibold text-rose-500">선생님과 상담하고 싶어요</label>
+            </div>
+            <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition shadow-md">출석 체크 완료</button>
+        </form>
+    </div>
+    <script>
+        const url = 'URL_HERE';
+        document.getElementById('attendanceForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                studentId: document.getElementById('studentId').value,
+                name: document.getElementById('name').value,
+                mood: document.querySelector('input[name="mood"]:checked').value,
+                goal: document.getElementById('goal').value,
+                consult: document.getElementById('consult').checked ? "신청" : "미신청"
+            };
+            try {
+                await fetch(url, { method: 'POST', body: JSON.stringify(data) });
+                alert('정상적으로 기록되었습니다.');
+                location.reload();
+            } catch (err) { alert('오류가 발생했습니다.'); }
+        });
+    </script>
 </body>
 </html>
