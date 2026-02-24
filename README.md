@@ -1,22 +1,150 @@
-# 📅 우리 반 아침 출석확인
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>아침 조회 출석</title>
+  <style>
+    /* 1. 화면 꾸미기 영역 */
+    
+    /* 전체 배경색과 글꼴 설정 */
+    body {
+      font-family: sans-serif;
+      background-color: #f4f7f6; /* 배경색을 바꾸려면 이 코드를 수정하세요 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
 
-학생들의 매일 아침 출석, 기분, 목표를 기록하는 페이지입니다.
+    /* 하얀색 입력창 테두리 설정 */
+    .container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 400px;
+    }
 
-### 🚀 사이트 바로가기
-👉 [출석확인 하러 가기](https://christianus0123-sketch.github.io/check/)
-*(위 주소를 아까 만든 실제 사이트 주소로 바꿔주세요!)*
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
 
-### 📝 기능 소개
-- **학번/이름 입력**: 학번과 이름 입력
-- **기분 선택**: 오늘 나의 기분을 이모지로 표현
-- **목표 설정**: 오늘의 다짐 한 줄
-- **상담 신청**: 선생님께 비밀스럽게 상담 요청
+    /* 각 입력 항목 사이의 간격 */
+    .form-group {
+      margin-bottom: 20px;
+    }
 
-### 🛠️ 메모
-- 데이터는 연결된 구글 스프레드시트에 자동 저장됩니다.
-- 수정이 필요하면 `index.html` 파일을 고치면 됩니다.
-- 질문 추가: 구글 시트 1행 추가 -> 스크립트 수정 -> HTML 수정 순서로 진행
+    /* 제목 글씨 설정 */
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
 
-### 📊 관리자 메뉴
-- [👉 체크인 결과 엑셀(스프레드시트) 열기](https://docs.google.com/spreadsheets/...)
-- [👉 앱스 스크립트 수정하러 가기](https://script.google.com/...)
+    /* 학생이 글자를 입력하는 칸의 디자인 */
+    input[type="text"], select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    /* 출석하기 버튼 디자인 */
+    button {
+      width: 100%;
+      padding: 16px;
+      background-color: #4CAF50; /* 버튼 색상을 바꾸려면 이 코드를 수정하세요 */
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>아침 조회 출석</h2>
+    
+    <form id="checkInForm">
+      <div class="form-group">
+        <label for="id">학번</label>
+        <input type="text" id="id" placeholder="예: 30101" required>
+      </div>
+
+      <div class="form-group">
+        <label for="name">이름</label>
+        <input type="text" id="name" placeholder="이름을 입력하세요" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="mood">오늘의 기분</label>
+        <select id="mood" required>
+          <option value="" disabled selected>기분을 선택해주세요</option>
+          <option value="😎 최고예요">😎 최고예요</option>
+          <option value="🙂 좋아요">🙂 좋아요</option>
+          <option value="😐 보통이에요">😐 보통이에요</option>
+          <option value="🥱 피곤해요">🥱 피곤해요</option>
+          <option value="🤒 아파요">🤒 아파요</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="todayGoal">오늘의 목표</label>
+        <input type="text" id="todayGoal" placeholder="오늘 하루 다짐 한 마디" required>
+      </div>
+
+      <button type="button" id="submitBtn" onclick="submitData()">출석하기</button>
+    </form>
+  </div>
+
+  <script>
+    function submitData() {
+      const id = document.getElementById("id").value;
+      const name = document.getElementById("name").value;
+      const mood = document.getElementById("mood").value;
+      const todayGoal = document.getElementById("todayGoal").value;
+
+      if(!id || !name || !mood || !todayGoal) {
+        alert("모든 항목을 입력해주세요.");
+        return;
+      }
+
+      const submitBtn = document.getElementById("submitBtn");
+      submitBtn.innerText = "제출 중입니다";
+      submitBtn.disabled = true;
+
+      // 앱스스크립트 배포 주소를 아래에 반드시 붙여넣으세요
+      const url = "https://script.google.com/macros/s/AKfycbwJpoNWRlJTgtQFb61lXMfXlvycwQA6c1RjwCFCscUYh5oCRLxaE3JxmRr6dTne-8U/exec";
+      
+      const data = { id, name, mood, todayGoal };
+
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        alert("출석이 완료되었습니다.");
+        document.getElementById("checkInForm").reset();
+      })
+      .catch(error => {
+        alert("오류가 발생했습니다. 다시 시도해 주세요.");
+      })
+      .finally(() => {
+        submitBtn.innerText = "출석하기";
+        submitBtn.disabled = false;
+      });
+    }
+  </script>
+</body>
+</html>
