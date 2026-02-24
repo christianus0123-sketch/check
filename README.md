@@ -149,7 +149,7 @@
       submitBtn.disabled = true;
 
       // ★ 아래 따옴표 안에 선생님의 앱스스크립트 웹앱 배포 링크를 붙여넣으세요.
-      const url = "https://script.google.com/macros/s/AKfycby9zb5EIJdjVU9kcXkt38IpcW1s7CwmhWrzq6_QhpQDrUpwttmhyCVylrXA2qTCAIc/exec";
+      const url = "https://script.google.com/macros/s/AKfycby5ItJZvU35klQ_a7DZrMPnGJDqtK3o_WUBHFFN11i2jqkrBNQPHX8BqIz-L5zLtZs/exec";
       
       const data = { id, name, mood, todayGoal };
 
